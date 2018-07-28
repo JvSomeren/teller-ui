@@ -1,0 +1,22 @@
+@import 'spinner';
+
+@import 'home';
+@import 'view';
+@import 'count';
+
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;  
+}
+body { 
+  font-family: 'Open Sans', sans-serif;
+}

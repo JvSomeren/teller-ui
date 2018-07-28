@@ -1,0 +1,835 @@
+/**
+  * Variables
+  */
+
+// base colors
+$background-color-primary: #ffffff;
+
+$green-darken: #388E3C;
+$green-primary: #4CAF50;
+
+$red-darken: #D32F2F;
+$red-primary: #F44336;
+
+$blue-grey-darken: #455A64;
+$blue-grey-primary: #607D8B;
+
+// font colors
+$font-color-primary: #212121;
+
+// breakpoints
+$break-small: 600px;
+$break-medium: 992px;
+$break-large: 1280px;
+
+// font sizes on breakpoint
+// counter
+$counter-fs-small: 3.5rem;
+$counter-fs-medium: 4.5rem;
+$counter-fs-large: 6rem;
+$counter-fs-xlarge: 8rem;
+
+// modal title
+$title-fs-small: 2rem;
+$title-fs-medium: 3rem;
+$title-fs-large: 4rem;
+$title-fs-xlarge: 5rem;
+
+/**
+  * Mixins
+  */
+
+@mixin flex() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;  
+}
+
+@mixin flex-flow($direction:"", $wrap:"") {
+  -webkit-flex-flow: unquote($direction) unquote($wrap);
+  flex-flow: unquote($direction) unquote($wrap);
+}
+
+/**
+  * Extending styles
+  */
+
+input {
+  border: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.button {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  @extend .pointer;
+}
+
+.hover {
+  @extend .pointer;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.modal--button {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  position: fixed;
+  right: 0;
+  z-index: 11;
+}
+
+.modal--input {
+  background: #455A64;
+  border-bottom: #607D8B 3px solid;
+  color: #607D8B;
+  text-align: center;
+  font-family: inherit;
+  font-weight: bold;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &-moz-::selection {
+    background: $blue-grey-darken;
+    color: $blue-grey-darken;
+  }
+
+  &::selection {
+    background: $blue-grey-darken;
+    color: $blue-grey-darken;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
+
+.modal--input--button {
+  background: $blue-grey-darken;
+  border: #607D8B 3px solid;
+  border-radius: 0.2rem;
+  color: $blue-grey-primary;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+
+  &:hover {
+    background: $blue-grey-primary;
+    color: $blue-grey-darken;
+  }
+}
+
+/**
+  * Styling
+  */
+
+#teller {
+  @include flex();
+  @include flex-flow(column);
+
+  color: $font-color-primary;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+
+  /**
+    * main overview / controls | positioning and styling
+    */
+  #admin-container,
+  #goto-view {
+    color: $green-darken;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    position: absolute;
+    text-transform: uppercase;
+    top: 0;
+
+    @extend .hover;
+
+    &:visited {
+      color: $green-darken;
+    }
+  }
+
+  #admin-container {
+    left: 0;
+  }
+
+  #goto-view {
+    right: 0;
+  }
+
+  .up-down-button {
+    color: #ffffff;
+    display: block;
+    font-family: 'Material Icons';
+    font-size: 6rem;
+    font-weight: bold;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+
+  #increase-container {
+    background: $green-primary;
+    flex: 1;
+    
+    @extend .pointer;
+
+    &:before {
+      content: "\E145";
+      top: 25%;
+
+      @extend .up-down-button;
+    }
+  }
+
+  #decrease-container {
+    background: $red-primary;
+    flex: 1;
+
+    @extend .pointer;
+
+    &:before {
+      content: "\E15B";
+      top: 75%;
+
+      @extend .up-down-button;
+    }
+  }
+
+  #options-container {
+    @include flex();
+    @include flex-flow(row, nowrap);
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+
+    pointer-events: none;
+  
+    div {
+      flex: 1;
+      margin: auto;
+    }
+
+    #counter-container {
+      flex: inherit;
+      pointer-events: auto;
+      z-index: 1;
+
+      #counter {
+        background: $background-color-primary;
+        border-radius: 1rem;
+        display: inline-block;
+
+        @extend .button;
+      }
+    }
+  }
+
+  #reset-container,
+  #history-container {
+    bottom: 0;
+    color: $red-darken;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    position: absolute;
+    text-transform: uppercase;
+
+    @extend .hover;
+
+    &:visited {
+      color: $red-darken;
+    }
+  }
+
+  #reset-container {
+    left: 0;
+  }
+
+  #history-container {
+    right: 0;
+  }
+
+  /**
+    * main overview / controls | font styling
+    */
+  @media screen and (max-width: $break-small) {
+    #counter {
+      font-size: $counter-fs-small;
+      padding: 0 1.2rem;
+
+      .lds-ellipsis {
+        top: 0.5rem;
+      }
+    }
+
+    #admin-container,
+    #goto-view,
+    #reset-container,
+    #history-container {
+      font-size: 1.2rem;
+    }
+
+    .modal-close,
+    .logout {
+      font-size: 1.3rem;
+    }
+  }
+
+  @media screen and (min-width: $break-small) and (max-width: $break-medium) {
+    #counter {
+      font-size: $counter-fs-medium;
+      padding: 0 1.4rem;
+
+      .lds-ellipsis {
+        top: 0.3rem;
+      }
+    }
+    
+    #admin-container,
+    #goto-view,
+    #reset-container,
+    #history-container {
+      font-size: 1.8rem;
+    }
+
+    .modal-close,
+    .logout {
+      font-size: 1.6rem;
+    }
+  }
+
+  @media screen and (min-width: $break-medium) and (max-width: $break-large) {
+    #counter {
+      font-size: $counter-fs-large;
+      padding: 0 1.8rem;
+
+      .lds-ellipsis {
+        top: -0.3rem;
+      }
+    }
+
+    #admin-container,
+    #goto-view,
+    #reset-container,
+    #history-container {
+      font-size: 2rem;
+    }
+
+    .modal-close,
+    .logout {
+      font-size: 2rem;
+    }
+  }
+
+  @media screen and (min-width: $break-large) {
+    #counter {
+      font-size: $counter-fs-xlarge;
+      padding: 0 2.4rem;
+
+      .lds-ellipsis {
+        top: -1.1rem;
+      }
+    }
+
+    #admin-container,
+    #goto-view,
+    #reset-container,
+    #history-container {
+      font-size: 2rem;
+    }
+
+    .modal-close,
+    .logout {
+      font-size: 2rem;
+    }
+  }
+
+  /**
+    * Modal styling
+    */
+  .modal {
+    bottom: 0;
+    font-weight: bold;
+    left: 0;
+    position: fixed;
+    right: 0;
+    text-transform: uppercase;
+    top: 0;
+    transition: all ease .2s;
+
+    .modal-close {
+      top: 0;
+      text-decoration: none;
+      color: unset;
+
+      &:before {
+        content: 'close';
+      }
+
+      @extend .modal--button;
+      @extend .hover;
+    }
+
+    .logout {
+      bottom: 0;
+
+      &:before {
+        content: 'logout';
+      }
+
+      @extend .modal--button;
+      @extend .hover;
+    }
+
+    .modal-content {
+      @include flex();
+      @include flex-flow(column);
+
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+
+      h2 {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+      }
+
+      p {
+        font-weight: normal;
+
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  #admin-modal {
+    background: $blue-grey-darken;
+    color: $blue-grey-primary;
+
+    .modal-content {
+      
+      > div {
+        @include flex();
+        @include flex-flow(column, nowrap);
+
+        // width: 50%;
+        margin: 0 10px;
+
+        #message-input {
+          width: 100%;
+          font-size: 1rem;
+          line-height: 1.6rem;
+
+          @extend .modal--input;
+        }
+
+        #message-options {
+          @include flex();
+          @include flex-flow(row, nowrap);
+
+          width: 100%;
+
+          div {
+            margin: 1rem 0.5rem;
+            text-align: center;
+
+            @extend .modal--input--button;
+          }
+        }
+      }
+    }
+  }
+
+  #reset-modal {
+    background: $blue-grey-darken;
+    color: $blue-grey-primary;
+
+    #reset-modal-options {
+      @include flex();
+      @include flex-flow(row, nowrap);
+
+      justify-content: space-around;
+
+      div {
+        
+        @extend .modal--input--button;
+      }
+    }
+  }
+
+  #counter-set-modal,
+  #login-container {
+    background: $blue-grey-darken;
+    color: $blue-grey-primary;
+
+    .modal-content > div {
+      @include flex();
+      @include flex-flow(row, nowrap);
+
+      align-items: center;
+      position: relative;
+
+      i {
+        cursor: pointer;
+        margin-left: 10px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: -1.2em;
+      }
+    }
+
+    #counter-input {
+      
+      @extend .modal--input
+    }
+
+    #goto-view {
+      color: $blue-grey-primary;
+    }
+
+    #login-container-button-container {
+      div {
+        
+        @extend .modal--input--button;
+      }
+    }
+  }
+
+  #history-modal {
+    background: $blue-grey-darken;
+    color: $blue-grey-primary;
+
+    #history-instructions {
+      margin-top: 2rem;
+    }
+
+    #history-clear {
+      bottom: 0;
+      left: 0;
+      padding: 0.5rem 1rem;
+      position: absolute;
+      cursor: pointer;
+
+      @extend .hover;
+    }
+
+    #history-modal-list {
+      overflow-y: auto;
+
+      .history-modal-item {
+        @include flex();
+        @include flex-flow(row, nowrap);
+        
+        cursor: pointer;
+        justify-content: space-around;
+        margin: auto;
+        padding: 5px 0;
+        position: relative;
+
+        * {
+          margin: auto;
+          text-align: center;
+          vertical-align: middle;
+        }
+
+        i {
+          flex: 1;
+        }
+
+        &:hover:before {
+          content: '>';
+          font-weight: bold;
+          position: absolute;
+          left: -10px;
+        }
+
+        &:after {
+          border-bottom: 1px solid $blue-grey-primary;
+          bottom: 0;
+          content: " ";
+          left: 50%;
+          position: absolute;
+          transform: translateX(-50%);
+          width: 65%;
+        }
+
+        &:last-child:after {
+          border: none;
+        }
+
+        .history-old {
+          flex: 2;
+          font-weight: normal;
+        }
+
+        .history-new {
+          flex: 2;
+
+        }
+
+        .history-badge {
+          flex: 4;
+          text-align: right;
+
+          &.history-change-increase {
+            color: $green-primary;
+
+            &:before {
+              content: '+';
+            }
+          }
+
+          &.history-change-decrease {
+            color: $red-primary;
+          }
+        }
+      }
+
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 1rem;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+      }
+    }
+  }
+  
+  /**
+    * Modal | font styling
+    */
+  @media screen and (max-width: $break-small) {
+    #counter-input,
+    #counter-input + i {
+      font-size: $counter-fs-small;
+    }
+
+
+    .modal-content {
+      h2 {
+        font-size: $title-fs-small;
+        top: 2.5rem;
+      }
+
+      p {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+      }
+    }
+
+    #reset-modal-options {
+      width: 80%;
+
+      div {
+        font-size: 1rem;
+      }
+    }
+
+    #login-container-button {
+      font-size: 1rem;
+    }
+
+    #history-modal-list {
+      margin-top: 20px;
+      max-height: 60%;
+
+      .history-modal-item {
+        font-size: 1.2rem;
+        width: 25rem;
+        max-width: 70%;
+      }
+    }
+
+    #history-instructions {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media screen and (min-width: $break-small) and (max-width: $break-medium) {
+    #counter-input,
+    #counter-input + i {
+      font-size: $counter-fs-medium;
+    }
+
+    .modal-content {
+      h2 {
+        font-size: $title-fs-medium;
+        top: 2.5rem;
+      }
+
+      p {
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+      }
+    }
+
+    #reset-modal-options {
+      width: 50%;
+
+      div {
+        font-size: 2rem;
+      }
+    }
+
+    #login-container-button {
+      font-size: 2rem;
+    }
+
+    #history-modal-list {
+      max-height: 60%;
+
+      .history-modal-item {
+        font-size: 1.8rem;
+        width: 35rem;
+        max-width: 70%;
+      }
+    }
+
+    #history-instructions {
+      font-size: 1.4rem;
+    }
+  }
+
+  @media screen and (min-width: $break-medium) and (max-width: $break-large) {
+    #counter-input,
+    #counter-input + i {
+      font-size: $counter-fs-large;
+    }
+
+    .modal-content {
+      h2 {
+        font-size: $title-fs-large;
+        top: 2.5rem;
+      }
+
+      p {
+        font-size: 2rem;
+        margin-bottom: 1.2rem;
+      }
+    }
+
+    #reset-modal-options {
+      width: 50%;
+
+      div {
+        font-size: 2.2rem;
+      }
+    }
+
+    #login-container-button {
+      font-size: 2.2rem;
+    }
+
+    #history-modal-list {
+      margin-top: 20px;
+      max-height: 60%;
+
+      .history-modal-item {
+        font-size: 1.8rem;
+        width: 35rem;
+        max-width: 70%;
+      }
+    }
+
+    #history-instructions {
+      font-size: 1.4rem;
+    }
+  }
+
+  @media screen and (min-width: $break-large) {
+    #counter-input {
+      font-size: $counter-fs-xlarge;
+    }
+
+    #counter-input + i {
+      font-size: $counter-fs-large;
+    }
+
+    .modal-content {
+      h2 {
+        font-size: $title-fs-xlarge;
+        top: 2.5rem;
+      }
+
+      p {
+        font-size: 2.5rem;
+        margin-bottom: 1.2rem;
+      }
+    }
+
+    #reset-modal-options {
+      width: 30%;
+
+      div {
+        font-size: 2.5rem;
+      }
+    }
+
+    #login-container-button {
+      font-size: 2.5rem;
+    }
+
+    #history-modal-list {
+      margin-top: 20px;
+      max-height: 60%;
+
+      .history-modal-item {
+        font-size: 1.8rem;
+        width: 45rem;
+        max-width: 70%;
+      }
+    }
+
+    #history-instructions {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+#error-handling {
+  background: red;
+  border-radius: 0.5rem;
+  bottom: 0;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  left: 50%;
+  margin-bottom: 0.6rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+  padding: 0.8rem 1.5rem;
+  position: fixed;
+  z-index: 200;
+
+  @extend .button;
+}

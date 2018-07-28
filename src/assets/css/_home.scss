@@ -1,0 +1,46 @@
+#menu {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 50;
+
+  #menu-counter {
+    background: #4CAF50;
+    flex: 1;
+    cursor: pointer;
+
+    &:before {
+      content: "count";
+      display: block;
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      font-size: 5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
+  #menu-view {
+    background: #F44336;
+    flex: 1;
+    cursor: pointer;
+
+    &:before {
+      content: "view";
+      display: block;
+      position: absolute;
+      top: 75%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      font-size: 5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+}
