@@ -110,7 +110,7 @@ export default {
 let webAuth = new WebAuth({
   domain: AUTH0_CONFIG.domain,
   clientID: AUTH0_CONFIG.clientId,
-  redirectUri: `${AUTH0_CONFIG.callbackUrl}/callback/`,
+  redirectUri: `${AUTH0_CONFIG.callbackUrl}/callback`,
   // we will use the api/v2/ to access the user information as payload
   audience: 'https://' + AUTH0_CONFIG.domain + '/api/v2/', 
   responseType: 'token id_token',
