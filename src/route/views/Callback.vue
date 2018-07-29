@@ -11,7 +11,7 @@ export default {
   mounted() {
     this.$store.dispatch('auth/handleAuthentication')
       .then(() => {
-        this.$router.push({ name: 'count' });
+        this.$router.replace({ name: 'count' });
       })
       .catch(err => console.error(err));
   }
