@@ -18,7 +18,7 @@ npm run build
 #### Deloyment
 Please check (this)[https://router.vuejs.org/guide/essentials/history-mode.html] document when deploying on a live webserver. Make sure the configuration has been handled otherwise the routing will mess up.
 
-Also set `path` in `src/config.js` to `<path> +  /teller-api/socket.io'`.
+Also set `path` in `src/config.js` to `<path> +  /teller/socket.io'`.
 
 ### Development
 This will open a local webserver which can be used to interact with the application.

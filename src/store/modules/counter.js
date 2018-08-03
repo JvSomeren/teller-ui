@@ -99,6 +99,10 @@ const actions = {
 
       resolve();
     });
+  },
+
+  socket_connect() {
+    // $socket.emit('room get')
   }
 }
 
